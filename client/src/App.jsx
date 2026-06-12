@@ -6,14 +6,25 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
+import { logExample } from "./api/logger";
+import { initLog } from './api/initLog';
 import { CalculatorButton } from './components/UI/CalculatorButton';
 
 
 function App() {
   const [example, setExample] = useState('');
   const operations = ['/', '*', '-', '+']
+
+  useEffect(() => {
+    console.log(example);
+    logExample(example);
+  }, [example])
+
+  useEffect(() => {
+    initLog();
+  }, [])
 
   function IsOperationInExample(str) {
     for (let op of operations) {
@@ -50,7 +61,6 @@ function App() {
   }
 
   function CalculateResult(example) {
-    console.log(example)
     let leftDigit;
     let rightDigit;
     if (example.includes("+") || example.includes("-")) {
